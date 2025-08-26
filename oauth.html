@@ -1,0 +1,28 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Twitch OAuth Bridge</title>
+  <script>
+    (function () {
+      const qp = new URLSearchParams(location.search);
+      const code = qp.get('code');
+      const state = qp.get('state');
+      const error = qp.get('error');
+      const back = 'twixymod://oauth-callback';
+
+      if (error) {
+        location.replace(back + '?error=' + encodeURIComponent(error));
+        return;
+      }
+      if (code) {
+        location.replace(back + '?code=' + encodeURIComponent(code) + (state ? '&state=' + encodeURIComponent(state) : ''));
+      } else {
+        document.body.textContent = 'No code in query';
+      }
+    })();
+  </script>
+</head>
+<body>Redirecting…</body>
+</html>
